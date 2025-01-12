@@ -9,4 +9,5 @@ add_executable(Kruskal main.cpp
         Graph.cpp
         Path.cpp
         List.cpp
+        Matrix.cpp
 )

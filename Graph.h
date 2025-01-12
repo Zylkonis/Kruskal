@@ -17,6 +17,8 @@ public:
     Graph(int o): order(o) {};
 
     void addEdge(int src, int dest, int weight);
+
+    Graph readGraphFromFile(const std::string &filename);
 };
 
 
