@@ -19,9 +19,16 @@ private:
     List<List<T>> data;
 
 public:
-    Matrix(): rows(0), cols(0) {}
     Matrix(size_t rows, size_t cols, const T& initialValue)
-        : rows(rows), cols(cols) {}
+        : rows(rows), cols(cols) {
+        for (int i = 0; i < rows; i++) {
+            List<T> col;
+            for (int j = 0; j < cols; j++) {
+                col.push_back(initialValue);
+            }
+            data.push_back(col);
+        }
+    }
 
     // Accesseur pour une cellule
     T& operator()(size_t row, size_t col) {
@@ -46,12 +53,15 @@ public:
 
     // Affichage de la matrice
     void afficher() const {
-        for (const auto& row : data) {
-            for (const auto& elem : row) {
+        for (int i = 0; i < rows; i++) {
+            List<T> col = data[i];
+            for (int j = 0; j < cols; j++) {
+                T elem = col[j];
                 std::cout << elem << " ";
             }
             std::cout << std::endl;
         }
+        std::cout << std::endl;
     }
 
 };

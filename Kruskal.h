@@ -29,24 +29,27 @@ private:
 
     // Fusionner deux ensembles (Union-Find)
     void unionF(const int rootU, const int rootV) {
-        parent[rootV] = rootU;
+        if (parent[rootU] < parent[rootV]) {
+            parent[rootV] = parent[rootU];
+        } else {
+            parent[rootU] = parent[rootV];
+        }
     }
 
 public:
     Kruskal() = default;
 
     // Algorithme de Kruskal sur les listes
-    void kruskalL(const std::string &graphFile, const std::string &resFile = nullptr) {
-        std::cout << "graphFile = ";
-        std::cout << graphFile << std::endl;
+    void kruskalL(const std::string &graphFile, const std::string &resFile = "") {
         const Graph graph = Graph::readGraphFromFile(graphFile);
+
 
         // Création et ajout des arêtes
         Map<int, List<Pair<int, int>>> edgesL = graph.getEdgesL();
         for (int i = 1; i <= graph.getOrder(); i++) {   // Parcours des sommets
             List<Pair<int, int>> lAdj = edgesL.get(i);
 
-            for (int j = 1; j <= lAdj.get_size(); j++) {    // Parcours des adjacences
+            for (int j = 0; j < lAdj.get_size(); j++) {    // Parcours des adjacences
                 Pair<int, int> adj = lAdj[j];
 
                 Edge e(i, adj.getFirst(), adj.getSecond());
@@ -55,11 +58,21 @@ public:
                 }
             }
         }
+        std::cout << "affichage de lAdj: " << std::endl;
+        for (int i = 0; i < edgesRes.get_size(); i++) {   // Parcours des sommets
+            Edge e = edgesRes[i];
+            std::cout << "{" << e.getSrc() << ", " << e.getDest() << ", " << e.getWeight() << "}" << std::endl;
+        }
+
+
         // Tri des arêtes par poids croissant
         edgesRes.sort([](const Edge& a, const Edge& b) {
             return a < b;
         });
-
+        std::cout << "affichage de edgesRes: " << std::endl;
+        for (int i = 0; i < edgesRes.get_size(); i++) {
+            std::cout << "{" << edgesRes[i].getSrc() << ", " << edgesRes[i].getDest() << ", " << edgesRes[i].getWeight() << "}" << std::endl;
+        }
 
         for (int i = 0; i <= graph.getOrder(); i++) {
             parent.push_back(i);
@@ -68,15 +81,24 @@ public:
         List<Edge> mst; // Résultat : arêtes de l'arbre couvrant minimal
 
         // Parcours des arêtes triées
-        for (int i = 1; i <= edgesRes.get_size(); i++) {
+        for (int i = 0; i < edgesRes.get_size(); i++) {
             Edge edge = edgesRes[i];
             if (find(edge.getSrc()) != find(edge.getDest())) {
                 mst.push_back(edge); // Ajout de l'arête à l'arbre couvrant
-                unionF(edge.getSrc(), edge.getDest()); // Fusion des ensembles
+                unionF(find(edge.getSrc()), find(edge.getDest())); // Fusion des ensembles
+
+                std::cout << "parent = {";
+                for (int j = 0; j < parent.get_size(); j++) {
+                    std::cout << parent[j] << ", ";
+                }
+                std::cout << "}" << std::endl;
             }
         }
 
-        //return mst;
+        std::cout << "affichage du res: " << std::endl;
+        for (int i = 0; i < mst.get_size(); i++) {
+            std::cout << "{" << mst[i].getSrc() << ", " << mst[i].getDest() << ", " << mst[i].getWeight() << "}" << std::endl;
+        }
     }
 };
 

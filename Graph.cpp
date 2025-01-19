@@ -8,23 +8,26 @@
 
 
 Graph Graph::readGraphFromFile(const std::string &filename) {
-    std::ifstream inputFile(filename);
+    std::ifstream inputFile("../" + filename);
     if (!inputFile.is_open()) {
-        throw std::runtime_error("Impossible d'ouvrir le fichier");
+        throw std::runtime_error("File not found: " + filename);
     }
 
     int order;
-    inputFile >> order;
+    inputFile >> order;  // Lire l'ordre du graphe
     Graph graph(order);
 
     int node;
+    // On lit chaque ligne du fichier
     while (inputFile >> node) {
-        int neighbor;
-        int cost;
-        while (inputFile >> neighbor >> cost && neighbor != 0) {
-            if (node < neighbor) {
-                graph.addEdge(node - 1, neighbor - 1, cost);
-            }
+        int neighbor, cost;
+
+        // On traite les voisins et coûts pour ce sommet
+        while (inputFile >> neighbor) {
+            if (neighbor == 0) break;  // Fin des voisins pour ce sommet
+
+            inputFile  >> cost;
+            graph.addEdge(node, neighbor, cost);  // Ajouter l'arête
         }
     }
 

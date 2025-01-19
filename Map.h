@@ -49,7 +49,15 @@ public:
                 return entry.value;
             }
         }
-
+        throw std::runtime_error("Key not found: " + key);
+    }
+    // Obtenir la valeur associée à une clé
+    V& get(const K& key) {
+        for (int i = 0; i < entries.get_size(); i++) {
+            if (entries[i].key == key) {
+                return entries[i].value;
+            }
+        }
         throw std::runtime_error("Key not found: " + key);
     }
 

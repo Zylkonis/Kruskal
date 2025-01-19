@@ -23,55 +23,6 @@ class List {
     Element* tail;
     size_t size;
 
-
-    // Fonction de tri fusion pour trier la liste
-    Element* merge_sort(Element* node, const std::function<bool(const T&, const T&)>& compare) {
-        if (!node || !node->next) return node;
-
-        // Diviser la liste en deux moitiés
-        Element* mid = get_middle(node);
-        Element* left = node;
-        Element* right = mid->next;
-        mid->next = nullptr;    // Séparation des deux "sous-listes"
-
-        // Appliquer merge sort sur les deux moitiés
-        left = merge_sort(left, compare);
-        right = merge_sort(right, compare);
-
-        // Fusionner les deux moitiés triées
-        return merge(left, right, compare);
-    }
-
-    // Obtenir le milieu d'une liste
-    Element* get_middle(Element* node) {
-        if (!node) {
-            return nullptr;
-        }
-
-        Element* res = head;
-        const int iMid = size/2;
-        int i = 0;
-        while (i < iMid) {
-            res = res->next;
-            ++i;
-        }
-        return res;
-    }
-
-    // Fusionner deux listes triées
-    Element* merge(Element* left, Element* right, const std::function<bool(const T&, const T&)>& compare) {
-        if (!left) return right;
-        if (!right) return left;
-
-        if (compare(left->value, right->value)) {
-            left->next = merge(left->next, right, compare);
-            return left;
-        } else {
-            right->next = merge(left, right->next, compare);
-            return right;
-        }
-    }
-
 public:
     List() : head(nullptr), tail(nullptr), size(0) {}
 
@@ -138,18 +89,21 @@ public:
     }
 
     // Supprimer le premier élément
-    Element* pop_front() {
+    void pop_front() {
         if (!head) {
             std::cerr << "Liste vide, impossible d'utiliser pop_front()'.\n";
-            return nullptr;
+            return;
         }
-        Element* temp = head;
         head = head->next;
+        Element* e = head;
+        for (int i = 1; i < size; i++) {
+            e->head = head;
+            e = e->next;
+        }
         --size;
         if (!head) {
             tail = nullptr;
         }
-        return temp;
     }
 
     // Supprimer l'élément à l'index donné
@@ -157,7 +111,7 @@ public:
         if (index == 0) {
             head = head->next;
             Element* e = head;
-            for (int i = 1; i < index; i++) {
+            for (int i = 1; i < size; i++) {
                 e->head = head;
                 e = e->next;
             }
@@ -205,18 +159,40 @@ public:
         size += L.size;
     }
 
-    // Tri avec une lambda fonction
-    void sort(const std::function<bool(const T&, const T&)>& compare) {
-        if (!head || !head->next) return; // Rien à trier si la liste est vide ou a un seul élément
+    // Méthode sort qui trie la liste grâce à une lambda fonction
+    void sort(std::function<bool(const T&, const T&)> cmp) {
+        if (size < 2) return; // Pas besoin de trier si la liste contient 0 ou 1 élément
 
-        head = merge_sort(head, compare);
-
-        // Mettre à jour le pointeur tail
+        Element* sorted = nullptr; // Liste triée
         Element* current = head;
-        while (current && current->next) {
-            current = current->next;
+
+        while (current) {
+            // Enlever l'élément de la liste actuelle
+            Element* next = current->next;
+            current->next = nullptr;
+
+            // Insérer l'élément dans la liste triée
+            if (!sorted || cmp(current->value, sorted->value)) {
+                current->next = sorted;
+                sorted = current;
+            } else {
+                Element* temp = sorted;
+                while (temp->next && !cmp(current->value, temp->next->value)) {
+                    temp = temp->next;
+                }
+                current->next = temp->next;
+                temp->next = current;
+            }
+
+            current = next;
         }
-        tail = current;
+
+        // Mettre à jour head et tail
+        head = sorted;
+        tail = head;
+        while (tail && tail->next) {
+            tail = tail->next;
+        }
     }
 };
 

@@ -23,7 +23,11 @@ private:
     bool isIn(int u) const;
 
 public:
-    Graph(const int o): order(o), edgesM(Matrix<int>(o, o, 0)) {};
+    Graph(const int o): order(o), edgesM(Matrix<int>(o, o, 0)) {
+        for (int i = 1; i <= order; i++) {
+            edgesL.add(i, List<Pair<int, int>>());
+        }
+    };
 
     // Lis un fichier texte pour former le graph sous forme de liste d'adjacence
     static Graph readGraphFromFile(const std::string &filename);
@@ -41,15 +45,11 @@ public:
     }
 
     void addEdge(int src, int dest, int weight) {
-        if (edgesL.containsKey(src)) {
-            edgesL.get(src).push_back({dest, weight});
-        } else {
-            List<Pair<int, int>> l;
-            l.push_back({dest, weight});
-            edgesL.add(src, l);
-        }
-        edgesM(src, dest) = weight;
-        edgesM(dest, src) = weight;
+        edgesL.get(src).push_back({dest, weight});
+        edgesL.get(dest).push_back({src, weight});
+
+        edgesM(src - 1, dest - 1) = weight;
+        edgesM(dest - 1, src - 1) = weight;
     }
 };
 

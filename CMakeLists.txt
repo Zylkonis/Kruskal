@@ -6,9 +6,11 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(.)
 
 add_executable(Kruskal main.cpp
-        Graph.cpp
         Edge.h
-        Pair.h
-        Map.h
+        Graph.cpp
         Kruskal.h
+        List.h
+        Map.h
+        Matrix.h
+        Pair.h
 )
