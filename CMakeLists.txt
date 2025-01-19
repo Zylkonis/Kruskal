@@ -7,7 +7,8 @@ include_directories(.)
 
 add_executable(Kruskal main.cpp
         Graph.cpp
-        Path.cpp
-        List.cpp
-        Matrix.cpp
+        Edge.h
+        Pair.h
+        Map.h
+        Kruskal.h
 )

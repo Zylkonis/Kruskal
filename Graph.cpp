@@ -6,11 +6,8 @@
 
 #include <fstream>
 
-void Graph::addEdge(int src, int dest, int weight) {
-    paths.push_back({src, dest, weight});
-}
 
-Graph readGraphFromFile(const std::string &filename) {
+Graph Graph::readGraphFromFile(const std::string &filename) {
     std::ifstream inputFile(filename);
     if (!inputFile.is_open()) {
         throw std::runtime_error("Impossible d'ouvrir le fichier");
