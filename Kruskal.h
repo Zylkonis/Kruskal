@@ -104,7 +104,7 @@ public:
         }
 
         fin = clock();
-        double temps_cpu = (fin-debut) / 1000 ;
+        double temps_cpu = fin - debut ;
 
         resultKruscal(acm, resFile, temps_cpu);
     }
@@ -171,7 +171,7 @@ public:
         }
 
         fin = clock();
-        double temps_cpu = (fin-debut) / 1000 ;
+        double temps_cpu = fin - debut ;
 
         resultKruscal(acm, resFile, temps_cpu);
     }
@@ -230,7 +230,7 @@ private:
                     file << "(" << acm[i].getSrc() << " -> " << acm[i].getDest() << " : " << acm[i].getWeight() << ")\n";
                 }
 
-                file << "Temps CPU: " << temps << ".\n";
+                file << "Temps CPU: " << temps << "ms.\n";
 
             } else {
                 std::cerr << "Impossible d'ouvrir le fichier." << std::endl;
