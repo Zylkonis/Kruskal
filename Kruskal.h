@@ -61,12 +61,12 @@ public:
                 }
             }
         }
-        std::cout << "affichage de lAdj: " << std::endl;
+        std::cout << "affichage des aretes: " << std::endl;
         for (int i = 0; i < edgesRes.get_size(); i++) {   // Parcours des sommets
             Edge e = edgesRes[i];
             std::cout << "{" << e.getSrc() << ", " << e.getDest() << ", " << e.getWeight() << "}" << std::endl;
         }
-
+        std::cout << std::endl;
 
         // Tri des arêtes par poids croissant
         edgesRes.sort([](const Edge& a, const Edge& b) {
@@ -76,6 +76,7 @@ public:
         for (int i = 0; i < edgesRes.get_size(); i++) {
             std::cout << "{" << edgesRes[i].getSrc() << ", " << edgesRes[i].getDest() << ", " << edgesRes[i].getWeight() << "}" << std::endl;
         }
+        std::cout << std::endl;
 
         for (int i = 0; i <= graph.getOrder(); i++) {
             parent.push_back(i);
@@ -97,11 +98,13 @@ public:
                 std::cout << "}" << std::endl;
             }
         }
+        std::cout << std::endl;
 
         std::cout << "affichage du res: " << std::endl;
         for (int i = 0; i < acm.get_size(); i++) {
             std::cout << "{" << acm[i].getSrc() << ", " << acm[i].getDest() << ", " << acm[i].getWeight() << "}" << std::endl;
         }
+        std::cout << std::endl;
 
         fin = clock();
         double temps_cpu = fin - debut ;
@@ -128,21 +131,23 @@ public:
                 }
             }
         }
-        std::cout << "affichage de lAdj: " << std::endl;
+        std::cout << "affichage des aretes: " << std::endl;
         for (int i = 0; i < edgesRes.get_size(); i++) {   // Parcours des sommets
             Edge e = edgesRes[i];
             std::cout << "{" << e.getSrc() << ", " << e.getDest() << ", " << e.getWeight() << "}" << std::endl;
         }
+        std::cout << std::endl;
 
 
         // Tri des arêtes par poids croissant
         edgesRes.sort([](const Edge& a, const Edge& b) {
             return a < b;
         });
-        std::cout << "affichage de edgesRes: " << std::endl;
+        std::cout << "affichage des aretes tries: " << std::endl;
         for (int i = 0; i < edgesRes.get_size(); i++) {
             std::cout << "{" << edgesRes[i].getSrc() << ", " << edgesRes[i].getDest() << ", " << edgesRes[i].getWeight() << "}" << std::endl;
         }
+        std::cout << std::endl;
 
         for (int i = 0; i <= graph.getOrder(); i++) {
             parent.push_back(i);
@@ -164,11 +169,13 @@ public:
                 std::cout << "}" << std::endl;
             }
         }
+        std::cout << std::endl;
 
         std::cout << "affichage du res: " << std::endl;
         for (int i = 0; i < acm.get_size(); i++) {
             std::cout << "{" << acm[i].getSrc() << ", " << acm[i].getDest() << ", " << acm[i].getWeight() << "}" << std::endl;
         }
+        std::cout << std::endl;
 
         fin = clock();
         double temps_cpu = fin - debut ;
@@ -216,7 +223,7 @@ private:
             std::cout << "Temps CPU: " << temps << std::endl;
         }
         else {
-            std::ofstream file("../" + resFile);
+            std::ofstream file(resFile);
             if (file.is_open()) {
                 if (connexe) {
                     file << "LE GRAPHE EST CONNEXE.\n";

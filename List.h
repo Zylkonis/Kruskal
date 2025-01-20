@@ -97,19 +97,6 @@ public:
         ++size;
     }
 
-    // Ajouter un élément au début
-    void push_front(const T& value) {
-        auto* newElement = new Element(value, head);
-        if (!head) {
-            head = tail = newElement;
-        } else {
-            newElement->next = head;
-            head = newElement;
-        }
-        head->head = head;
-        ++size;
-    }
-
     // Supprimer le premier élément
     void pop_front() {
         if (!head) {
@@ -117,7 +104,9 @@ public:
             return;
         }
 
+        Element* old = head;
         head = head->next;
+        delete old;
         --size;
 
         if (!head) {
@@ -145,19 +134,6 @@ public:
             e = e->next;
         }
         return false;
-    }
-
-    // Concatène deux listes
-    void concat(List<T> L) {
-        if (L.head == nullptr) return;
-        if (!head) {
-            head = L.head;
-            tail = L.tail;
-        } else {
-            tail->next = L.head;
-            tail = L.tail;
-        }
-        size += L.size;
     }
 
     // Méthode sort qui trie la liste grâce à une lambda fonction

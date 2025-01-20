@@ -18,10 +18,6 @@ private:
     Map<int, List<Pair<int, int>>> edgesL;    //  Map<Sommet_source, List<Sommet_destination, poids>>
     Matrix<int> edgesM;
 
-    int find(int u);
-    void unionSets(int u, int v, List<int>& parent, List<int>& rank);
-    bool isIn(int u) const;
-
 public:
     Graph(const int o): order(o), edgesM(Matrix<int>(o, o, 0)) {
         for (int i = 1; i <= order; i++) {

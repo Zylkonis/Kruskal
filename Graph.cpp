@@ -8,7 +8,7 @@
 
 
 Graph Graph::readGraphFromFile(const std::string &filename) {
-    std::ifstream inputFile("../" + filename);
+    std::ifstream inputFile(filename);
     if (!inputFile.is_open()) {
         throw std::runtime_error("File not found: " + filename);
     }
