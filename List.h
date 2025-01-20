@@ -31,10 +31,34 @@ public:
         }
     }
 
+    List(const List<T>& other) : head(nullptr), tail(nullptr), size(0) {
+        Element* current = other.head;
+        while (current) {
+            push_back(current->value);
+            current = current->next;
+        }
+    }
+
     ~List() {
         while (head) {
             pop_front();
         }
+    }
+
+    List<T>& operator=(const List<T>& other) {
+        if (this != &other) {
+            // Nettoyer les ressources existantes
+            while (head) {
+                pop_front();
+            }
+            // Copier les éléments de l'autre liste
+            Element* current = other.head;
+            while (current) {
+                push_back(current->value);
+                current = current->next;
+            }
+        }
+        return *this;
     }
 
     T& operator[](const int index) {
