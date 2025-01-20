@@ -13,10 +13,9 @@ template <typename T>
 class List {
     struct Element {
         T value;
-        Element* head;
         Element* next;
 
-        Element(const T& value, Element* head) : value(value), head(head), next(nullptr) {};
+        Element(const T& value) : value(value), next(nullptr) {};
     };
 
     Element* head;
@@ -64,12 +63,10 @@ public:
 
     // Ajouter un élément à la fin
     void push_back(const T& value) {
+        auto* newElement = new Element(value);
         if (!head) {
-            auto* newElement = new Element(value, head);
             head = tail = newElement;
-            head->head = head;
         } else {
-            auto* newElement = new Element(value, head);
             tail->next = newElement;
             tail = newElement;
         }
@@ -96,12 +93,9 @@ public:
             return;
         }
 
-        head = head->next;
         Element* e = head;
-        for (int i = 1; i < size; i++) {
-            e->head = head;
-            e = e->next;
-        }
+        head = head->next;
+        delete e;
 
         --size;
 
