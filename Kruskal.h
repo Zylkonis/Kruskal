@@ -42,10 +42,10 @@ public:
 
     // Algorithme de Kruskal sur les listes
     void kruskalL(const std::string &graphFile, const std::string &resFile = "") {
-        double debut, fin;  // Test de temps
-        debut = clock();
         const Graph graph = Graph::readGraphFromFile(graphFile);
 
+        double debut, fin;  // Test de temps
+        debut = clock();
 
         // Création et ajout des arêtes
         Map<int, List<Pair<int, int>>> edgesL = graph.getEdgesL();
@@ -114,9 +114,10 @@ public:
 
     // Algorithme de Kruskal sur les matrices
     void kruskalM(const std::string &graphFile, const std::string &resFile = "") {
+        const Graph graph = Graph::readGraphFromFile(graphFile);
+
         double debut, fin;  // Test de temps
         debut = clock();
-        const Graph graph = Graph::readGraphFromFile(graphFile);
 
 
         // Création et ajout des arêtes
