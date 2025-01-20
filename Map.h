@@ -27,11 +27,6 @@ public:
 
     // Ajouter ou mettre à jour une paire clé-valeur
     void add(const K& key, const V& value) {
-        std::cout << " keys = ";
-        for (int i = 0; i < entries.get_size(); i++) {
-            std::cout << entries[i].key << ", ";
-        }
-        std::cout << std::endl << std::endl;
         for (int i = 0; i < entries.get_size(); i++) {
             Entry entry = entries[i];
             if (entry.key == key) { // Si une clé est déjà présente
