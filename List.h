@@ -93,10 +93,7 @@ public:
             return;
         }
 
-        Element* e = head;
         head = head->next;
-        delete e;
-
         --size;
 
         if (!head) {
