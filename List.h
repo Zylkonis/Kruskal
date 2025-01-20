@@ -101,24 +101,6 @@ public:
         }
     }
 
-    // Supprimer l'élément à l'index donné
-    void remove(const int index) {
-        if (index == 0) {
-            head = head->next;
-            Element* e = head;
-            for (int i = 1; i < size; i++) {
-                e->head = head;
-                e = e->next;
-            }
-        } else {
-            Element* e = head;
-            for (int i = 1; i < index; i++) {
-                e = e->next;
-            }
-            e->next = e->next->next;
-        }
-    }
-
     // Obtenir la taille de la liste
     size_t get_size() const {
         return size;
