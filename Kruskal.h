@@ -42,6 +42,8 @@ public:
 
     // Algorithme de Kruskal sur les listes
     void kruskalL(const std::string &graphFile, const std::string &resFile = "") {
+        double debut, fin;  // Test de temps
+        debut = clock();
         const Graph graph = Graph::readGraphFromFile(graphFile);
 
 
@@ -101,11 +103,16 @@ public:
             std::cout << "{" << acm[i].getSrc() << ", " << acm[i].getDest() << ", " << acm[i].getWeight() << "}" << std::endl;
         }
 
-        resultKruscal(acm, resFile);
+        fin = clock();
+        double temps_cpu = (fin-debut) / 1000 ;
+
+        resultKruscal(acm, resFile, temps_cpu);
     }
 
     // Algorithme de Kruskal sur les matrices
     void kruskalM(const std::string &graphFile, const std::string &resFile = "") {
+        double debut, fin;  // Test de temps
+        debut = clock();
         const Graph graph = Graph::readGraphFromFile(graphFile);
 
 
@@ -163,11 +170,14 @@ public:
             std::cout << "{" << acm[i].getSrc() << ", " << acm[i].getDest() << ", " << acm[i].getWeight() << "}" << std::endl;
         }
 
-        resultKruscal(acm, resFile);
+        fin = clock();
+        double temps_cpu = (fin-debut) / 1000 ;
+
+        resultKruscal(acm, resFile, temps_cpu);
     }
 
 private:
-    void resultKruscal(List<Edge> acm, const std::string &resFile) {
+    void resultKruscal(List<Edge> acm, const std::string &resFile, double temps) {
         bool connexe = true;
         int par = 1;
         while (connexe && par < parent.get_size() - 1) {
@@ -182,8 +192,12 @@ private:
             cost += acm[i].getWeight();
         }
 
-        acm.sort([](const Edge& a, const Edge& b) {return a.getDest() < b.getDest();});
-        acm.sort([](const Edge& a, const Edge& b) {return a.getSrc() < b.getSrc();});
+        acm.sort([](const Edge& a, const Edge& b) {
+            if (a.getSrc() == b.getSrc()) {
+                return a.getDest() < b.getDest();
+            }
+            return a.getSrc() < b.getSrc();
+        });
 
         if (resFile.empty()) {
             if (connexe) {
@@ -198,6 +212,8 @@ private:
             for (int i = 0; i < acm.get_size(); i++) {
                 std::cout << "(" << acm[i].getSrc() << " -> " << acm[i].getDest() << " : " << acm[i].getWeight() << ")" << std::endl;
             }
+
+            std::cout << "Temps CPU: " << temps << std::endl;
         }
         else {
             std::ofstream file("../" + resFile);
@@ -213,6 +229,9 @@ private:
                 for (int i = 0; i < acm.get_size(); i++) {
                     file << "(" << acm[i].getSrc() << " -> " << acm[i].getDest() << " : " << acm[i].getWeight() << ")\n";
                 }
+
+                file << "Temps CPU: " << temps << ".\n";
+
             } else {
                 std::cerr << "Impossible d'ouvrir le fichier." << std::endl;
             }

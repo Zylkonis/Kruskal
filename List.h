@@ -77,11 +77,10 @@ public:
 
     // Ajouter un élément au début
     void push_front(const T& value) {
+        Element* newElement = new Element(value, newElement);
         if (!head) {
-            Element* newElement = new Element(value, newElement);
             head = tail = newElement;
         } else {
-            Element* newElement = new Element(value, head);
             newElement->next = head;
             head = newElement;
         }
@@ -94,13 +93,16 @@ public:
             std::cerr << "Liste vide, impossible d'utiliser pop_front()'.\n";
             return;
         }
+
         head = head->next;
         Element* e = head;
         for (int i = 1; i < size; i++) {
             e->head = head;
             e = e->next;
         }
+
         --size;
+
         if (!head) {
             tail = nullptr;
         }
