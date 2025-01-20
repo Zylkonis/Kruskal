@@ -182,8 +182,8 @@ private:
             cost += acm[i].getWeight();
         }
 
-        acm.sort([](const Edge& a, const Edge& b) {return a.getDest() < b.getDest(); ;});
-        acm.sort([](const Edge& a, const Edge& b) {return a.getSrc() < b.getSrc(); ;});
+        acm.sort([](const Edge& a, const Edge& b) {return a.getDest() < b.getDest();});
+        acm.sort([](const Edge& a, const Edge& b) {return a.getSrc() < b.getSrc();});
 
         if (resFile.empty()) {
             if (connexe) {

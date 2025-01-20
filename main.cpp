@@ -11,7 +11,7 @@ int main(int argc, char* argv[]) {
     }
     const std::string graphIn = argv[1];
 
-    const char* graphOut;
+    const char* graphOut = "";
     if (argc == 3) {
         graphOut = argv[2];
     }
