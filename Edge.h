@@ -7,6 +7,7 @@
 
 
 class Edge {
+private:
     int src;
     int dest;
     int weight;
@@ -15,15 +16,15 @@ public:
     Edge(const int s, const int d, const int w): src(s), dest(d), weight(w) {};
 
     bool operator<(const Edge edge) const {
-        return weight < edge.weight;
+        return weight < edge.getWeight();
     }
     bool operator>(const Edge edge) const {
-        return weight > edge.weight;
+        return weight > edge.getWeight();
     }
     bool operator==(const Edge edge) const {
         const bool res =
-            ((src == edge.src && dest == edge.dest) || (src == edge.dest && dest == edge.src))  // graphe non-orienté
-            && weight == edge.weight;
+            ((src == edge.getSrc() && dest == edge.getDest()) || (src == edge.getDest() && dest == edge.getSrc()))  // graphe non-orienté
+            && weight == edge.getWeight();
         return res;
     }
 

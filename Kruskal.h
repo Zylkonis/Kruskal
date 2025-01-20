@@ -21,7 +21,7 @@ private:
     }
 
     // Trouver le représentant de l'ensemble (Union-Find)
-    int find(const int val) {
+    auto find(const int val) -> int {
         if (parent[val] != val) {
             parent[val] = find(parent[val]); // Compression de chemin
         }

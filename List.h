@@ -73,19 +73,6 @@ public:
         ++size;
     }
 
-    // Ajouter un élément au début
-    void push_front(const T& value) {
-        auto* newElement = new Element(value, head);
-        if (!head) {
-            head = tail = newElement;
-        } else {
-            newElement->next = head;
-            head = newElement;
-        }
-        head->head = head;
-        ++size;
-    }
-
     // Supprimer le premier élément
     void pop_front() {
         if (!head) {
@@ -93,13 +80,16 @@ public:
             return;
         }
 
-        head = head->next;
+        Element* oldHead = head; // Sauvegarder l'élément actuel
+        head = head->next;      // Avancer le pointeur `head`
+        delete oldHead;         // Libérer la mémoire de l'ancien `head`
         --size;
 
         if (!head) {
-            tail = nullptr;
+            tail = nullptr; // Si la liste est vide, ajuster `tail`
         }
     }
+
 
     // Obtenir la taille de la liste
     size_t get_size() const {
@@ -112,9 +102,9 @@ public:
     }
 
     // Vérifier la présence d'un élément
-    bool isIn(T value) {
+    bool isIn(T value) const {
         Element* e = head;
-        for (int i = 0; i < size; i++) {
+        while (e) {
             if (value == e->value) {
                 return true;
             }
@@ -123,18 +113,6 @@ public:
         return false;
     }
 
-    // Concatène deux listes
-    void concat(List<T> L) {
-        if (L.head == nullptr) return;
-        if (!head) {
-            head = L.head;
-            tail = L.tail;
-        } else {
-            tail->next = L.head;
-            tail = L.tail;
-        }
-        size += L.size;
-    }
 
     // Méthode sort qui trie la liste grâce à une lambda fonction
     void sort(std::function<bool(const T&, const T&)> cmp) {
